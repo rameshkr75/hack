@@ -1,31 +1,80 @@
-26.924072	-82.358643
-26.933958	-82.291097
-26.957454	-82.353090
-26.960064	-82.352349
-27.000723	-82.376917
-27.039036	-82.401300
-27.046371	-82.246847
-27.049566	-82.378970
-27.054805	-82.380612
-27.064769	-82.418221
-27.081468	-82.425918
-27.093800	-82.433100
-27.094210	-82.442950
-27.095850	-82.360120
-27.098720	-82.450190
-27.098840	-82.454130
-27.099240	-82.367390
-27.099520	-82.386470
-27.099560	-82.386510
-27.099620	-82.411010
-27.099640	-82.400960
-27.099660	-82.400950
-27.099663	-82.445431
-27.099720	-82.445440
-27.099780	-82.430870
-27.099790	-82.417320
-27.100450	-82.384380
-27.101200	-82.427350
-27.101220	-82.454290
-27.104290	-82.433260
-27.104526	-82.410120
+<!DOCTYPE html>
+<html>
+<head>
+    <title>FileReader Example</title>
+
+<script type="text/javascript">
+function strcmp(a, b)
+{   
+    return (a<b?0:(a>b?0:1));  
+}
+ function distance(lat1, lon1, lat2, lon2, unit) {
+	var radlat1 = Math.PI * lat1/180
+	var radlat2 = Math.PI * lat2/180
+	var radlon1 = Math.PI * lon1/180
+	var radlon2 = Math.PI * lon2/180
+	var theta = lon1-lon2
+	var radtheta = Math.PI * theta/180
+	var dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
+	dist = Math.acos(dist)
+	dist = dist * 180/Math.PI
+	dist = dist * 60 * 1.1515
+	if (unit=="K") { dist = dist * 1.609344 }
+	if (unit=="N") { dist = dist * 0.8684 }
+	return dist
+}
+
+function find_tech(a,b,c) 
+{
+        var tech =[
+	[1,26.924072,-82.358643,"Name1",20,"Internet"],
+	[2,26.933958,-82.291097,"Name2",0,"Internet"],
+	[3,26.957454,-82.353090,"Name3",200,"TV"],
+	[4,26.960064,-82.352349,"Name4",40,"Phone"],
+	[5,27.000723,-82.376917,"Name5",50,"Phone"],
+	[6,27.039036,-82.401300,"Name6",29,"Phone"],
+	[7,27.046371,-82.246847,"Name7",57,"Phone"],
+	[8,27.049566,-82.378970,"Name8",75,"Phone"],
+	[9,27.054805,-82.380612,"Name9",100,"TV"],
+	[10,27.064769,-82.418221,"Name10",0,"Internet"],
+	[11,27.081468,-82.425918,"Name11",0,"Internet"],
+	[12,27.093800,-82.433100,"Name12",10,"Internet"],
+	[13,27.094210,-82.442950,"Name13",90,"TV"],
+	[14,27.095850,-82.360120,"Name14",45,"TV"],
+	[15,27.098720,-82.450190,"Name15",36,"TV"],
+	[16,27.098840,-82.454130,"Name16",17,"TV"],
+	[17,27.099240,-82.367390,"Name17",20,"TV"],
+	[18,27.099520,-82.386470,"Name18",200,"Internet"],
+	[19,27.099560,-82.386510,"Name19",500,"Internet"],
+	[20,27.099620,-82.411010,"Name20",18,"Internet"],
+	[21,27.099640,-82.400960,"Name21",22,"Phone"],
+	[22,27.099660,-82.400950,"Name22",198,"Phone"],
+	[23,27.099663,-82.445431,"Name23",10,"Phone"],
+	[24,27.099720,-82.445440,"Name24",2,"Phone"],
+	[25,27.099780,-82.430870,"Name25",8,"TV"]
+	];
+
+	j=0;
+	res = new Array;
+	L=tech.length;
+	for (i=0;i<L;i++)
+	{
+		if(distance(a,b,tech[i][1],tech[i][2],"N") <= 10 && tech[i][5]==c)
+		{
+			res[j] = new Array;
+			res[j++] = tech[i];
+		}
+	}
+	alert(res);
+	return res;
+}
+
+</script>
+</head>
+<body>
+<input type="text" id="t"  name="t">
+<input type="text" id="t1"  name="t1">
+<input type="text" id="t2"  name="t2">
+<input name="buttonExecute" onclick="find_tech(document.getElementById('t').value,document.getElementById('t1').value),TV" type="button" value="Execute" />
+</body>
+</html>
